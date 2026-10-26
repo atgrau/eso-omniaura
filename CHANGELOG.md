@@ -38,3 +38,4 @@
 - Ventana de bienvenida al instalar y de novedades al actualizar.
 - Donación de oro al autor desde el editor o los ajustes (solo megaservidor EU).
 - Comandos de chat `/omni` para usuarios avanzados.
+- Licencia GPL-3.0.
