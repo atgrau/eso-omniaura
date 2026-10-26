@@ -6,6 +6,28 @@
 
 **Your own on-screen alerts for The Elder Scrolls Online.** Track buffs, debuffs, resources, set procs and combat state, and show them as icons, bars or text exactly where you want them — all from an in-game visual editor, without typing a single ability ID.
 
+<details>
+<summary><b>Screenshots</b> (9)</summary>
+<br>
+<table>
+<tr>
+<td align="center"><a href="screenshots/01-help.png"><img src="screenshots/01-help.png" width="260" alt="Help in Settings"></a><br><sub>Help in Settings</sub></td>
+<td align="center"><a href="screenshots/02-chat-commands.png"><img src="screenshots/02-chat-commands.png" width="260" alt="Chat commands"></a><br><sub>Chat commands</sub></td>
+<td align="center"><a href="screenshots/03-editor.png"><img src="screenshots/03-editor.png" width="260" alt="Editor"></a><br><sub>Editor</sub></td>
+</tr>
+<tr>
+<td align="center"><a href="screenshots/04-watched-effects.png"><img src="screenshots/04-watched-effects.png" width="260" alt="Watched effects and options"></a><br><sub>Watched effects and options</sub></td>
+<td align="center"><a href="screenshots/05-position-on-screen.png"><img src="screenshots/05-position-on-screen.png" width="260" alt="Position on screen"></a><br><sub>Position on screen</sub></td>
+<td align="center"><a href="screenshots/06-icon-with-text.png"><img src="screenshots/06-icon-with-text.png" width="260" alt="Icon with text"></a><br><sub>Icon with text</sub></td>
+</tr>
+<tr>
+<td align="center"><a href="screenshots/07-bar.png"><img src="screenshots/07-bar.png" width="260" alt="Bar"></a><br><sub>Bar</sub></td>
+<td align="center"><a href="screenshots/08-catalog-buffs.png"><img src="screenshots/08-catalog-buffs.png" width="260" alt="Catalog: buffs"></a><br><sub>Catalog: buffs</sub></td>
+<td align="center"><a href="screenshots/09-catalog-gear.png"><img src="screenshots/09-catalog-gear.png" width="260" alt="Catalog: gear and sets"></a><br><sub>Catalog: gear and sets</sub></td>
+</tr>
+</table>
+</details>
+
 ## Features
 
 - **Visual editor** — type `/omni`, bind a key, or open it from *Settings → Add-Ons → OmniAura*. Create auras from ready-made templates.

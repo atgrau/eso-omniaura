@@ -8,6 +8,28 @@
 
 Versión actual: **1.0.0** (ver [CHANGELOG.md](CHANGELOG.md)).
 
+<details>
+<summary><b>Capturas</b> (9)</summary>
+<br>
+<table>
+<tr>
+<td align="center"><a href="screenshots/01-help.png"><img src="screenshots/01-help.png" width="260" alt="Ayuda en Ajustes"></a><br><sub>Ayuda en Ajustes</sub></td>
+<td align="center"><a href="screenshots/02-chat-commands.png"><img src="screenshots/02-chat-commands.png" width="260" alt="Comandos de chat"></a><br><sub>Comandos de chat</sub></td>
+<td align="center"><a href="screenshots/03-editor.png"><img src="screenshots/03-editor.png" width="260" alt="Editor"></a><br><sub>Editor</sub></td>
+</tr>
+<tr>
+<td align="center"><a href="screenshots/04-watched-effects.png"><img src="screenshots/04-watched-effects.png" width="260" alt="Efectos vigilados y opciones"></a><br><sub>Efectos vigilados y opciones</sub></td>
+<td align="center"><a href="screenshots/05-position-on-screen.png"><img src="screenshots/05-position-on-screen.png" width="260" alt="Ubicar en pantalla"></a><br><sub>Ubicar en pantalla</sub></td>
+<td align="center"><a href="screenshots/06-icon-with-text.png"><img src="screenshots/06-icon-with-text.png" width="260" alt="Icono con texto"></a><br><sub>Icono con texto</sub></td>
+</tr>
+<tr>
+<td align="center"><a href="screenshots/07-bar.png"><img src="screenshots/07-bar.png" width="260" alt="Barra"></a><br><sub>Barra</sub></td>
+<td align="center"><a href="screenshots/08-catalog-buffs.png"><img src="screenshots/08-catalog-buffs.png" width="260" alt="Catálogo: bufos"></a><br><sub>Catálogo: bufos</sub></td>
+<td align="center"><a href="screenshots/09-catalog-gear.png"><img src="screenshots/09-catalog-gear.png" width="260" alt="Catálogo: equipo y sets"></a><br><sub>Catálogo: equipo y sets</sub></td>
+</tr>
+</table>
+</details>
+
 ## Uso
 
 - `/omni` abre y cierra el editor. También desde *Ajustes → Add-Ons → OmniAura* o con una tecla en *Controles → OmniAura*.
