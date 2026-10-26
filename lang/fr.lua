@@ -20,24 +20,24 @@ L.HELP_HEADER = "Commandes (v%s) :"
 L.HELP = {
     "|cFFFF00/omni|r - ouvrir/fermer l'éditeur",
     "|cFFFF00/omni list|r - lister les auras",
-    "|cFFFF00/omni new buff <id|nom>[,...]|r - icône tant que vous avez le buff",
-    "|cFFFF00/omni new debuff <id|nom>|r - icône tant que VOTRE debuff est sur la cible",
-    "|cFFFF00/omni new missing <id|nom>|r - icône quand le buff MANQUE",
-    "|cFFFF00/omni new res <health|magicka|stamina|ultimate> <op><valeur>[%]|r - ex. : magicka <30%",
+    "|cFFFF00/omni new buff <id/nom>[,...]|r - icône tant que vous avez le buff",
+    "|cFFFF00/omni new debuff <id/nom>|r - icône tant que VOTRE debuff est sur la cible",
+    "|cFFFF00/omni new missing <id/nom>|r - icône quand le buff MANQUE",
+    "|cFFFF00/omni new res <health/magicka/stamina/ultimate> <op><valeur>[%]|r - ex. : magicka <30%",
     "|cFFFF00/omni new proc <abilityId> <secondes>|r - afficher N s au déclenchement (procs de sets)",
-    "|cFFFF00/omni new combat [in|out]|r - texte en/hors combat",
+    "|cFFFF00/omni new combat [in/out]|r - texte en/hors combat",
     "|cFFFF00/omni show <n>|r - afficher les réglages de l'aura",
     "|cFFFF00/omni set <n> <chemin> <valeur>|r - ex. : set 3 display.type bar",
-    "|cFFFF00/omni on|off|del|copy <n>|r - activer, désactiver, supprimer, dupliquer",
-    "|cFFFF00/omni unlock|lock|r - placer toutes les auras à l'écran en même temps",
-    "|cFFFF00/omni scan [player|target]|r - lister les effets actuels avec leurs IDs",
+    "|cFFFF00/omni on/off/del/copy <n>|r - activer, désactiver, supprimer, dupliquer",
+    "|cFFFF00/omni unlock/lock|r - placer toutes les auras à l'écran en même temps",
+    "|cFFFF00/omni scan [player/target]|r - lister les effets actuels avec leurs IDs",
     "|cFFFF00/omni log|r - activer/désactiver le journal des IDs de vos compétences",
 }
 L.NO_AURA = "Aucune aura numéro %s (voir |cFFFF00/omni list|r)"
 L.AURA_CREATED = "Aura créée : %s"
 L.NEED_SPELL = "Indiquez un ID ou un nom. Utilisez |cFFFF00/omni scan|r pour voir les IDs."
 L.MISSING_SUFFIX = " (manquant)"
-L.USAGE_RES = "Utilisation : /omni new res <health|magicka|stamina|ultimate> <op><valeur>[%]   ex. : magicka <30%"
+L.USAGE_RES = "Utilisation : /omni new res <health/magicka/stamina/ultimate> <op><valeur>[%]   ex. : magicka <30%"
 L.USAGE_PROC = "Utilisation : /omni new proc <abilityId>[,...] <secondes>  (IDs via |cFFFF00/omni log|r)"
 L.USAGE_SET = "Utilisation : /omni set <n> <chemin> <valeur>   (la valeur 'nil' supprime la clé)"
 L.NEW_TYPES = "Types : buff, debuff, missing, res, proc, combat"

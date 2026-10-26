@@ -2,6 +2,8 @@
 
 *English · [Español](README.es.md)*
 
+![OmniAura](screenshots/01-help.png)
+
 **Your own on-screen alerts for The Elder Scrolls Online.** Track buffs, debuffs, resources, set procs and combat state, and show them as icons, bars or text exactly where you want them — all from an in-game visual editor, without typing a single ability ID.
 
 ## Features

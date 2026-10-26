@@ -2,6 +2,8 @@
 
 *[English](README.md) · Español*
 
+![OmniAura](screenshots/01-help.png)
+
 **Tus propios avisos en pantalla para The Elder Scrolls Online.** Vigila buffs, debuffs, recursos, procs de sets y el estado de combate, y muéstralos como iconos, barras o textos justo donde quieras, todo desde un editor visual dentro del juego y sin escribir ni un solo ID.
 
 Versión actual: **1.0.0** (ver [CHANGELOG.md](CHANGELOG.md)).
