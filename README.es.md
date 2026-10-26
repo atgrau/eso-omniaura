@@ -2,7 +2,7 @@
 
 *[English](README.md) · Español*
 
-Addon para The Elder Scrolls Online al estilo WeakAuras / AuraMastery: auras configurables que muestran iconos, barras o textos según buffs, debuffs, recursos, procs y estado de combate.
+**Tus propios avisos en pantalla para The Elder Scrolls Online.** Vigila buffs, debuffs, recursos, procs de sets y el estado de combate, y muéstralos como iconos, barras o textos justo donde quieras, todo desde un editor visual dentro del juego y sin escribir ni un solo ID.
 
 Versión actual: **1.0.0** (ver [CHANGELOG.md](CHANGELOG.md)).
 
@@ -12,6 +12,7 @@ Versión actual: **1.0.0** (ver [CHANGELOG.md](CHANGELOG.md)).
 - **+ Nueva aura...** crea un aura a partir de una plantilla.
 - En las auras de buff y proc, los efectos se eligen con el buscador, el **catálogo** o los atajos (efectos actuales, habilidades de tus barras, recientes). Un aura con varios efectos se muestra si hay *cualquiera* de ellos.
 - El aura seleccionada se arrastra en pantalla para moverla; su esquina amarilla cambia el tamaño.
+- **Mover auras** (debajo de la lista) oculta el editor y muestra la interfaz de juego normal para colocar todas las auras a la vez; se termina con «Listo» o Esc.
 - La flecha junto a la X pliega el editor para ver las auras de detrás.
 
 ### Comandos de chat (avanzado)
@@ -23,7 +24,7 @@ Versión actual: **1.0.0** (ver [CHANGELOG.md](CHANGELOG.md)).
 /omni set <n> <ruta> <valor>   p. ej. set 1 display.type bar
 /omni scan [player|target]     efectos actuales con su ID
 /omni log                registra los IDs de las habilidades que usas
-/omni unlock | lock      mover todas las auras a la vez
+/omni unlock | lock      entrar/salir del modo «Mover auras»
 /omni reset confirm      borra todas las auras
 ```
 

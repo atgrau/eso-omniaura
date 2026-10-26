@@ -3,7 +3,7 @@
 ## Version: 1.0.0
 ## AddOnVersion: 100
 ## APIVersion: 101051 101052
-## Description: Configurable auras (buffs, debuffs, resources, procs) in the style of WeakAuras.
+## Description: Your own on-screen alerts for buffs, debuffs, resources and procs, built with a simple visual editor. Type /omni to start.
 ## SavedVariables: OmniAura_SV
 ## OptionalDependsOn: LibAddonMenu-2.0
 

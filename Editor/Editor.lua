@@ -103,10 +103,10 @@ local TRIGGER_FIELDS = {
     buff = {
         { key = "unit", label = L.F_UNIT, kind = "choice", choices = UNIT_CHOICES, default = "player", rerender = true },
         { key = "spells", kind = "spells", mode = "buff" },
-        { key = "onlyMine", label = L.F_ONLY_MINE, kind = "bool", default = false },
-        { key = "show", label = L.F_SHOW, kind = "choice", default = "active", rerender = true,
+        { key = "onlyMine", label = L.F_ONLY_MINE, kind = "bool", default = false, options = true },
+        { key = "show", label = L.F_SHOW, kind = "choice", default = "active", rerender = true, options = true,
           choices = { { "active", L.SHOW_ACTIVE }, { "missing", L.SHOW_MISSING } } },
-        { key = "minStacks", label = L.F_MIN_STACKS, kind = "number",
+        { key = "minStacks", label = L.F_MIN_STACKS, kind = "number", options = true,
           show = function(ctx) return ctx.trig.show ~= "missing" end },
     },
     resource = {
@@ -118,10 +118,10 @@ local TRIGGER_FIELDS = {
     },
     proc = {
         { key = "spells", kind = "spells", mode = "proc" },
-        { key = "duration", label = L.F_DURATION, kind = "number", default = 10 },
-        { key = "source", label = L.F_SOURCE, kind = "choice", default = "player",
+        { key = "duration", label = L.F_DURATION, kind = "number", default = 10, options = true },
+        { key = "source", label = L.F_SOURCE, kind = "choice", default = "player", options = true,
           choices = { { "player", L.SOURCE_PLAYER }, { "any", L.SOURCE_ANY } } },
-        { key = "refresh", label = L.F_REFRESH, kind = "bool", default = false },
+        { key = "refresh", label = L.F_REFRESH, kind = "bool", default = false, options = true },
     },
     combat = {
         { key = "state", label = L.F_STATE, kind = "choice", default = "in",
@@ -132,7 +132,6 @@ local TRIGGER_FIELDS = {
 local DISPLAY_TYPE_FIELD = { key = "type", label = L.F_TYPE, kind = "choice", choices = DISPLAY_TYPES, default = "icon", rerender = true }
 local DISPLAY_FIELDS = {
     icon = {
-        { key = "icon", label = L.F_ICON, kind = "text" },
         { key = "text", label = L.F_TEXT_CENTER, kind = "text", default = "{time}", show = HasTimeOrValue },
         { key = "text2", label = L.F_TEXT_CORNER, kind = "text", default = "{stacks}", show = HasStacks },
         { key = "color", label = L.F_ICON_COLOR, kind = "color", default = { 1, 1, 1, 1 } },
@@ -149,7 +148,6 @@ local DISPLAY_FIELDS = {
         { key = "showIcon", label = L.F_SHOW_ICON, kind = "bool", default = true, rerender = true },
         { key = "desaturate", label = L.F_DESATURATE, kind = "bool", default = true,
           show = function(ctx) return HasMissing(ctx) and BarShowsIcon(ctx) end },
-        { key = "icon", label = L.F_ICON, kind = "text", show = BarShowsIcon },
         { key = "text", label = L.F_TEXT_LEFT, kind = "text", default = "{name}" },
         { key = "text2", label = L.F_TEXT_RIGHT, kind = "text", default = "{time}", show = HasTimeOrValue },
         { key = "color", label = L.F_BAR_COLOR, kind = "color", default = { 0.2, 0.6, 1, 0.9 } },
@@ -249,6 +247,17 @@ function factories.header()
     row.label:SetFont("ZoFontWinH4")
     row.label:SetColor(unpack(GOLD))
     row.label:SetDimensions(LABEL_W + WIDGET_W, HEADER_H)
+    row.label:SetVerticalAlignment(TEXT_ALIGN_BOTTOM)
+    return row
+end
+
+function factories.subheader()
+    local row = NewRowBase()
+    row.height = 36
+    row:SetHeight(36)
+    row.label:SetFont("ZoFontWinH5")
+    row.label:SetColor(0.9, 0.85, 0.7, 1)
+    row.label:SetDimensions(LABEL_W + WIDGET_W, 36)
     row.label:SetVerticalAlignment(TEXT_ALIGN_BOTTOM)
     return row
 end
@@ -413,6 +422,11 @@ end
 ---------------------------------------------------------------------------
 -- Constructores de filas
 ---------------------------------------------------------------------------
+local function SubHeader(text)
+    local row = AcquireRow("subheader")
+    row.label:SetText(text)
+end
+
 local function Header(text)
     local row = AcquireRow("header")
     row.label:SetText(text)
@@ -590,8 +604,6 @@ local function SearchSection(aura, trig, mode, pick)
         end
     end
 
-    ButtonRow({ { L.OPEN_CATALOG, function() OA.Catalog.Open(aura, trig, mode) end } })
-
     if s.status then
         local note = AcquireRow("note")
         note.label:SetText(s.status)
@@ -629,8 +641,9 @@ local function SpellsEditor(aura, trig, path, mode)
         if type(s) == "number" then iconByName[zo_strlower(U.AbilityName(s))] = U.AbilityIcon(s) end
     end
 
-    Note(L.F_SPELLS_LIST)
-    if #spells == 0 then Note("    " .. L.SPELLS_EMPTY) end
+    SubHeader(L.F_SPELLS_LIST)
+    if #spells == 0 then Note(L.SPELLS_EMPTY) end
+    if #spells > 1 then Note(L.SPELLS_ANY_HINT) end
     for index, s in ipairs(spells) do
         local icon, text
         if type(s) == "number" then
@@ -647,7 +660,9 @@ local function SpellsEditor(aura, trig, path, mode)
     end
 
     local function Pick(entry) AddSpell(aura, trig, entry, mode) end
+    SubHeader(L.SUB_ADD_EFFECT)
     SearchSection(aura, trig, mode, Pick)
+    ButtonRow({ { L.OPEN_CATALOG, function() OA.Catalog.Open(aura, trig, mode) end } })
     if mode == "buff" then
         local unit = trig.unit or "player"
         PickerRow(L.PICK_CURRENT, CurrentEffects(unit),
@@ -811,8 +826,15 @@ function Ed.Render()
     Field(aura, TRIGGER_TYPE_FIELD, base .. "type")
     local caps = Capabilities(aura)
     local trigCtx = { caps = caps, aura = aura, trig = trig, d = aura.display }
+    local optionsShown = false
     for _, f in ipairs(TRIGGER_FIELDS[trig.type] or {}) do
-        if Visible(f, trigCtx) then Field(aura, f, base .. f.key) end
+        if Visible(f, trigCtx) then
+            if f.options and not optionsShown then
+                SubHeader(L.SUB_OPTIONS)
+                optionsShown = true
+            end
+            Field(aura, f, base .. f.key)
+        end
     end
     if #aura.triggers > 1 then
         ButtonRow({ { L.REMOVE_TRIGGER, function()
@@ -1047,9 +1069,15 @@ local function Build()
 
     local list = WM:CreateControlFromVirtual("OmniAuraEditorList", body, "ZO_ScrollContainer")
     list:SetAnchor(TOPLEFT, win, TOPLEFT, 16, 112)
-    list:SetAnchor(BOTTOMLEFT, win, BOTTOMLEFT, 16, -20)
+    list:SetAnchor(BOTTOMLEFT, win, BOTTOMLEFT, 16, -64)
     list:SetWidth(LIST_W)
     Ed.listChild = GetControl(list, "ScrollChild")
+
+    local move = WM:CreateControlFromVirtual("OmniAuraEditorMove", body, "ZO_DefaultButton")
+    move:SetDimensions(LIST_W, 30)
+    move:SetAnchor(BOTTOMLEFT, win, BOTTOMLEFT, 16, -20)
+    move:SetText(L.MOVE)
+    move:SetHandler("OnClicked", function() Ed.StartMoveMode() end)
 
     local divider = OA.Display.Solid("OmniAuraEditorDivider", body, 0.77, 0.69, 0.46, 0.3)
     divider:SetWidth(1)
@@ -1099,7 +1127,7 @@ function Ed.OnHide()
     OA.Catalog.Hide()
     ReleaseRows()
     OA.previewId = nil
-    if OA.unlocked then Ed.SetUnlocked(false) else OA.Display.RefreshUnlocked() end
+    if OA.unlocked and not Ed.moveMode then Ed.SetUnlocked(false) else OA.Display.RefreshUnlocked() end
 end
 
 ---------------------------------------------------------------------------
@@ -1176,8 +1204,61 @@ function Ed.SetCollapsed(collapsed)
     ClearTooltip(InformationTooltip)
 end
 
+---------------------------------------------------------------------------
+-- Modo "Mover auras": oculta el editor y muestra el HUD normal con cursor
+-- (escena "hudui", la misma que al pulsar la tecla del cursor jugando) para
+-- colocar todas las auras viendo la interfaz real.
+---------------------------------------------------------------------------
+local function BuildMoveBar()
+    local bar = WM:CreateTopLevelWindow("OmniAuraMoveBar")
+    bar:SetDimensions(700, 50)
+    bar:SetAnchor(TOP, GuiRoot, TOP, 0, 70)
+    bar:SetDrawTier(DT_HIGH)
+    bar:SetMouseEnabled(true)
+    bar:SetHidden(true)
+
+    local bg = WM:CreateControlFromVirtual("OmniAuraMoveBarBg", bar, "ZO_DefaultBackdrop")
+    bg:SetAnchorFill(bar)
+
+    local hint = WM:CreateControl("OmniAuraMoveBarHint", bar, CT_LABEL)
+    hint:SetFont("ZoFontGame")
+    hint:SetColor(0.9, 0.9, 0.9, 1)
+    hint:SetText(L.MOVE_HINT)
+    hint:SetAnchor(LEFT, bar, LEFT, 16, 0)
+
+    local done = WM:CreateControlFromVirtual("OmniAuraMoveBarDone", bar, "ZO_DefaultButton")
+    done:SetDimensions(120, 30)
+    done:SetText(L.MOVE_DONE)
+    done:SetAnchor(RIGHT, bar, RIGHT, -12, 0)
+    done:SetHandler("OnClicked", function() Ed.EndMoveMode(true) end)
+
+    Ed.moveBar = bar
+end
+
+function Ed.StartMoveMode()
+    if Ed.moveMode then return end
+    Ed.moveMode = true
+    SCENE_MANAGER:Show("hudui")
+    OA.Display.SetUnlocked(true)
+    Ed.moveBar:SetHidden(false)
+end
+
+-- reopenEditor: volver al editor al terminar (botón "Listo").
+function Ed.EndMoveMode(reopenEditor)
+    if not Ed.moveMode then return end
+    Ed.moveMode = false
+    Ed.moveBar:SetHidden(true)
+    OA.Display.SetUnlocked(false)
+    if reopenEditor then Ed.Show() end
+end
+
 function Ed.Init()
     Build()
+    BuildMoveBar()
+    -- Salir con Esc o abriendo otro menú también termina el modo mover.
+    HUD_UI_SCENE:RegisterCallback("StateChange", function(_, newState)
+        if newState == SCENE_HIDDEN and Ed.moveMode then Ed.EndMoveMode(false) end
+    end)
     RegisterDialogs()
 end
 

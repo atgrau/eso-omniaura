@@ -2,12 +2,12 @@
 
 *English · [Español](README.es.md)*
 
-**Configurable on-screen auras for The Elder Scrolls Online**, in the spirit of WeakAuras and AuraMastery. Track buffs, debuffs, resources, set procs and combat state, and show them as icons, bars or text — all from an in-game visual editor, without typing ability IDs.
+**Your own on-screen alerts for The Elder Scrolls Online.** Track buffs, debuffs, resources, set procs and combat state, and show them as icons, bars or text exactly where you want them — all from an in-game visual editor, without typing a single ability ID.
 
 ## Features
 
 - **Visual editor** — type `/omni`, bind a key, or open it from *Settings → Add-Ons → OmniAura*. Create auras from ready-made templates and see the selected one live on screen.
-- **Drag to place and resize** — move the aura on screen with the mouse; drag its yellow corner to resize it.
+- **Drag to place and resize** — move the aura on screen with the mouse; drag its yellow corner to resize it. **Move auras** hides the editor and shows your normal game interface so you can place every aura at once.
 - **What you can track**
   - Buffs and debuffs on you, your target or a boss — while active or when missing, only yours, minimum stacks.
   - Health, magicka, stamina or ultimate, by value or percentage.
@@ -19,7 +19,7 @@
   - Browse a full **catalog** by category: major/minor buffs, debuffs, all seven classes, weapons, armor, guilds, world skills, Alliance War, racial, Mundus stones, companions, gear and consumables — with in-game tooltips.
   - Shortcuts for your current effects, the skills on your bars and recently seen effects and procs.
 - **Displays** — icon (timer, stacks, duration shading, greyed out when missing), icon with text above, progress bar, or plain text. Colors via the game's color picker, text templates (`{name} {time} {stacks} {value} {max} {percent}`) and an optional sound.
-- **Clean interface** — the editor only shows the options that make sense for each aura.
+- **Clean interface** — the editor is organized in sections and only shows the options that make sense for each aura.
 - **Languages** — English, Spanish, German and French (follows the game client language).
 
 ## Installation
@@ -49,7 +49,7 @@
 /omni set <n> <path> <value>    e.g. set 1 display.type bar
 /omni scan [player|target]      current effects with their IDs
 /omni log                 log the ability IDs you use
-/omni unlock | lock       move all auras at once
+/omni unlock | lock       enter/leave "Move auras" mode
 /omni reset confirm       delete all auras
 ```
 

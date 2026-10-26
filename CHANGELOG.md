@@ -6,8 +6,9 @@
 - Ventana de edición (`/omni`, tecla configurable o *Ajustes → Add-Ons → OmniAura*), centrada, plegable y movible desde su barra de título.
 - Lista de auras con icono, nombre y papelera (borrado con confirmación).
 - Plantillas para crear auras: buff en mí, mi debuff en el objetivo, buff que me falta, recurso, proc de set/habilidad y estado de combate.
-- El formulario solo muestra las opciones que tienen sentido para cada aura.
+- Formulario organizado en apartados (General, Cuándo se muestra con Efectos vigilados / Añadir efecto / Opciones, y Apariencia) que solo muestra las opciones que tienen sentido para cada aura.
 - El aura seleccionada se ve en pantalla y se mueve y redimensiona arrastrándola (esquina amarilla para el tamaño).
+- **Mover auras**: oculta el editor y muestra la interfaz de juego normal para colocar y redimensionar todas las auras a la vez; se termina con «Listo» o Esc.
 
 ### Qué se puede vigilar (triggers)
 - **Buff / debuff** en ti, tu objetivo o un jefe: activo o que falta, solo los tuyos, acumulaciones mínimas.
@@ -19,7 +20,8 @@
 ### Elegir habilidades sin escribir IDs
 - Buscador en todas las habilidades del juego, agrupadas por nombre.
 - Catálogo completo con categorías: bufos/perjuicios, las 7 clases, armas, armadura, gremios, mundo, guerra de alianzas, raciales, Mundus, compañeros, equipo y consumibles; con filtro por nombre y descripción emergente.
-- Atajos: efectos actuales, habilidades de tus barras y efectos/procs recientes.
+- Atajos: efectos activos ahora, habilidades de tus barras y efectos/procs recientes.
+- Un aura puede vigilar varios efectos (se muestra si hay cualquiera de ellos); al añadir por nombre no se duplican IDs.
 
 ### Cómo se ve (displays)
 - Icono (temporizador, acumulaciones, sombreado de duración, gris cuando falta, borde).

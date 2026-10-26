@@ -244,13 +244,12 @@ end
 -- Mover auras necesita el cursor, así que se hace con el editor abierto.
 function handlers.unlock()
     if not EditorAvailable() then return end
-    OA.Editor.Show()
-    OA.Editor.SetUnlocked(true)
+    OA.Editor.StartMoveMode()
 end
 
 function handlers.lock()
     if not EditorAvailable() then return end
-    OA.Editor.SetUnlocked(false)
+    OA.Editor.EndMoveMode(false)
 end
 
 function handlers.editor()
