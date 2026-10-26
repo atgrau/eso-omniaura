@@ -7,7 +7,7 @@
 ## Features
 
 - **Visual editor** — type `/omni`, bind a key, or open it from *Settings → Add-Ons → OmniAura*. Create auras from ready-made templates.
-- **Drag to place and resize** — press *Position on screen* to move the aura you are editing with the mouse and resize it from its yellow corner. **Position auras** hides the editor and shows your normal game interface so you can place every aura at once.
+- **Drag to place and resize** — *Position on screen* closes the editor and shows the aura you are editing over your game interface; drag it to move it and use its yellow corner to resize it, then press *Done* to return to the editor. **Position auras** hides the editor and shows your normal game interface so you can place every aura at once.
 - **What you can track**
   - Buffs and debuffs on you, your target or a boss — while active or when missing, only yours, minimum stacks.
   - Health, magicka, stamina or ultimate, by value or percentage.

@@ -8,7 +8,7 @@
 - Botón de ayuda (**?**) que abre la sección de OmniAura en *Ajustes → Add-Ons*: descripción, guía de uso, consejos y comandos de chat (sin LibAddonMenu se muestra en una ventana).
 - Plantillas para crear auras: buff en mí, mi debuff en el objetivo, buff que me falta, recurso, proc de set/habilidad y estado de combate.
 - Formulario organizado en apartados (General, Cuándo se muestra con Efectos vigilados / Añadir efecto / Opciones, y Apariencia) que solo muestra las opciones que tienen sentido para cada aura.
-- Botón **Ubicar en pantalla**: muestra solo el aura que editas para moverla y redimensionarla arrastrándola (esquina amarilla para el tamaño), con una barra superior y «Listo» para terminar, sin cerrar el editor.
+- Botón **Ubicar en pantalla** (al final de Apariencia): cierra el editor y muestra solo el aura que editas sobre la interfaz de juego para moverla y redimensionarla (esquina amarilla para el tamaño); «Listo» vuelve a abrir el editor.
 - Mientras el editor está abierto, las auras activas se ocultan; solo se ve la que estás ubicando.
 - **Ubicar auras**: oculta el editor y muestra la interfaz de juego normal para colocar y redimensionar todas las auras a la vez; se termina con «Listo» o Esc.
 

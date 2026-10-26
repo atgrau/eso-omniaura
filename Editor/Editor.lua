@@ -858,10 +858,6 @@ function Ed.Render()
 
     Header(L.H_LOOK)
     Field(aura, DISPLAY_TYPE_FIELD, "display.type")
-    ButtonRow({ { Ed.placing and L.MOVE_DONE or L.PLACE_THIS, function()
-        Ed.SetPlacing(not Ed.placing)
-        Ed.RequestRender()
-    end } })
     local dtype = aura.display.type
     local displayCtx = { caps = caps, aura = aura, d = aura.display }
     local anyText = false
@@ -872,6 +868,7 @@ function Ed.Render()
         end
     end
     if anyText then Note(L.TEXT_HELP) end
+    ButtonRow({ { L.PLACE_THIS, function() Ed.StartMoveMode(aura.id) end } })
 
     Header(L.H_ACTIONS)
     ButtonRow({
@@ -1158,8 +1155,10 @@ function Ed.OnHide()
     OA.Catalog.Hide()
     ReleaseRows()
     Ed.placing = false
-    OA.previewId = nil
-    if not Ed.moveMode then Ed.ShowMoveBar(false) end
+    if not Ed.moveMode then
+        OA.previewId = nil
+        Ed.ShowMoveBar(false)
+    end
     if OA.unlocked and not Ed.moveMode then Ed.SetUnlocked(false) else OA.Display.RefreshUnlocked() end
 end
 
@@ -1248,9 +1247,10 @@ function Ed.SetCollapsed(collapsed)
 end
 
 ---------------------------------------------------------------------------
--- Modo "Ubicar auras": oculta el editor y muestra el HUD normal con cursor
+-- Modo ubicar ("Ubicar auras" o el botón "Ubicar en pantalla" de un aura): oculta el
+-- editor y muestra el HUD normal con cursor
 -- (escena "hudui", la misma que al pulsar la tecla del cursor jugando) para
--- colocar todas las auras viendo la interfaz real.
+-- colocar las auras viendo la interfaz real.
 ---------------------------------------------------------------------------
 local function BuildMoveBar()
     local bar = WM:CreateTopLevelWindow("OmniAuraMoveBar")
@@ -1292,20 +1292,28 @@ function Ed.ShowMoveBar(show, hint)
     Ed.moveBar:SetHidden(not show)
 end
 
-function Ed.StartMoveMode()
+-- auraId: ubicar solo esa aura; sin él, todas.
+function Ed.StartMoveMode(auraId)
     if Ed.moveMode then return end
     Ed.SetPlacing(false)
-    Ed.moveMode = true
+    Ed.moveMode = auraId and "single" or "all"
     SCENE_MANAGER:Show("hudui")
-    OA.Display.SetUnlocked(true)
-    Ed.ShowMoveBar(true, L.MOVE_HINT)
+    if auraId then
+        OA.previewId = auraId
+        OA.Display.RefreshUnlocked()
+        Ed.ShowMoveBar(true, L.LOOK_HINT)
+    else
+        OA.Display.SetUnlocked(true)
+        Ed.ShowMoveBar(true, L.MOVE_HINT)
+    end
 end
 
 -- reopenEditor: volver al editor al terminar (botón "Listo").
 function Ed.EndMoveMode(reopenEditor)
     if not Ed.moveMode then return end
-    Ed.moveMode = false
+    Ed.moveMode = nil
     Ed.ShowMoveBar(false)
+    OA.previewId = nil
     OA.Display.SetUnlocked(false)
     if reopenEditor then Ed.Show() end
 end

@@ -11,7 +11,7 @@ Versión actual: **1.0.0** (ver [CHANGELOG.md](CHANGELOG.md)).
 - `/omni` abre y cierra el editor. También desde *Ajustes → Add-Ons → OmniAura* o con una tecla en *Controles → OmniAura*.
 - **+ Nueva aura...** crea un aura a partir de una plantilla.
 - En las auras de buff y proc, los efectos se eligen con el buscador, el **catálogo** o los atajos (efectos actuales, habilidades de tus barras, recientes). Un aura con varios efectos se muestra si hay *cualquiera* de ellos.
-- Con el botón **Ubicar en pantalla** (en Apariencia), el aura que editas se arrastra para moverla y su esquina amarilla cambia el tamaño.
+- El botón **Ubicar en pantalla** (al final de Apariencia) cierra el editor y muestra el aura que editas sobre la interfaz de juego: se arrastra para moverla, su esquina amarilla cambia el tamaño y «Listo» vuelve al editor.
 - **Ubicar auras** (debajo de la lista) oculta el editor y muestra la interfaz de juego normal para colocar todas las auras a la vez; se termina con «Listo» o Esc.
 - La flecha junto a la X pliega el editor. Mientras está abierto, las auras activas no se muestran.
 
