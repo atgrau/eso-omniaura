@@ -70,3 +70,7 @@ Bindings.xml            tecla para abrir el editor
 2. Actualizar `L.CHANGELOG` en los cuatro `lang/*.lua` (es lo que ve el jugador al actualizar) y `CHANGELOG.md`.
 3. Revisar `## APIVersion` (en el juego: `/script d(GetAPIVersion())`).
 4. Empaquetar la carpeta `OmniAura/` en un zip (el zip debe contener la carpeta, no los archivos sueltos).
+
+## Licencia
+
+[MIT](LICENSE) © @Artioner

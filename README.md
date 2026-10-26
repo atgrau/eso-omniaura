@@ -61,6 +61,10 @@ Bug reports and ideas are welcome in [Issues](../../issues). If you enjoy the ad
 
 See the [Spanish README](README.es.md#desarrollo) for the project structure and release checklist. Changes are listed in [CHANGELOG.md](CHANGELOG.md).
 
+## License
+
+[MIT](LICENSE) © @Artioner
+
 ---
 
 *This add-on is not created by, affiliated with or sponsored by ZeniMax Media Inc. or its affiliates. The Elder Scrolls® and related logos are registered trademarks or trademarks of ZeniMax Media Inc. in the United States and/or other countries.*
