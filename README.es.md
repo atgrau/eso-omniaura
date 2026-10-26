@@ -98,4 +98,4 @@ Bindings.xml            tecla para abrir el editor
 
 ## Licencia
 
-[MIT](LICENSE) © @Artioner
+Copyright (C) 2026 @Artioner. OmniAura es software libre bajo la [GNU General Public License v3.0](LICENSE): puedes redistribuirlo y modificarlo con esas condiciones, manteniendo el crédito del autor y publicando tus cambios con la misma licencia.

@@ -88,7 +88,7 @@ See the [Spanish README](README.es.md#desarrollo) for the project structure and 
 
 ## License
 
-[MIT](LICENSE) © @Artioner
+Copyright (C) 2026 @Artioner. OmniAura is free software, licensed under the [GNU General Public License v3.0](LICENSE): you may redistribute and modify it under those terms, keeping the author credit and publishing your changes under the same license.
 
 ---
 
