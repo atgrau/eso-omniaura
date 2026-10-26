@@ -60,6 +60,9 @@ function E.UpdateAura(rt, ctx, inCombat)
 
     if OA.unlocked or OA.previewId == aura.id then
         show, state = true, PreviewState(rt, now)
+    elseif OA.editorOpen then
+        -- Mientras se edita no se muestran las auras activas, solo la que se ubica.
+        show = false
     elseif aura.enabled ~= false and CheckLoad(aura, inCombat) then
         show, state = Evaluate(rt, ctx)
     end
@@ -128,10 +131,26 @@ function E.Teardown()
 end
 
 -- Llamar tras cualquier cambio en OA.sv.auras.
+-- Ámbito de cada aura: "account" (todos los personajes, por defecto) o "character"
+-- (solo el personaje que la configuró, guardado en aura.owner).
+function E.IsAvailable(aura)
+    return aura.scope ~= "character" or aura.owner == GetCurrentCharacterId()
+end
+
+function E.SetScope(aura, scope)
+    if scope == "character" then
+        aura.scope = "character"
+        aura.owner = GetCurrentCharacterId()
+        aura.ownerName = zo_strformat("<<1>>", GetUnitName("player"))
+    else
+        aura.scope, aura.owner, aura.ownerName = nil, nil, nil
+    end
+end
+
 function E.Rebuild()
     E.Teardown()
     for _, aura in pairs(OA.sv.auras) do
-        E.SetupAura(aura)
+        if E.IsAvailable(aura) then E.SetupAura(aura) end
     end
 end
 
@@ -175,6 +194,7 @@ function E.DuplicateAura(id)
     copy.display.x = (copy.display.x or 0) + 60
     local aura = E.CreateAura((copy.name or "?") .. OA.L.COPY_SUFFIX, copy.triggers or {}, copy.display)
     aura.logic, aura.load, aura.sound, aura.enabled = copy.logic, copy.load, copy.sound, copy.enabled
+    aura.scope, aura.owner, aura.ownerName = copy.scope, copy.owner, copy.ownerName
     E.Rebuild()
     return aura
 end
@@ -187,9 +207,12 @@ function E.DeleteAura(id)
     return true
 end
 
+-- IDs de las auras disponibles para el personaje actual, en orden de creación.
 function E.SortedIds()
     local ids = {}
-    for id in pairs(OA.sv.auras) do ids[#ids + 1] = id end
+    for id, aura in pairs(OA.sv.auras) do
+        if E.IsAvailable(aura) then ids[#ids + 1] = id end
+    end
     table.sort(ids)
     return ids
 end

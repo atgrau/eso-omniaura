@@ -241,7 +241,7 @@ local function EditorAvailable()
     return false
 end
 
--- Mover auras necesita el cursor, así que se hace con el editor abierto.
+-- "Ubicar auras": coloca todas las auras sobre la interfaz de juego (ver Editor).
 function handlers.unlock()
     if not EditorAvailable() then return end
     OA.Editor.StartMoveMode()

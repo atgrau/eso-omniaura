@@ -5,10 +5,12 @@
 ### Editor
 - Ventana de edición (`/omni`, tecla configurable o *Ajustes → Add-Ons → OmniAura*), centrada, plegable y movible desde su barra de título.
 - Lista de auras con icono, nombre y papelera (borrado con confirmación).
+- Botón de ayuda (**?**) que abre la sección de OmniAura en *Ajustes → Add-Ons*: descripción, guía de uso, consejos y comandos de chat (sin LibAddonMenu se muestra en una ventana).
 - Plantillas para crear auras: buff en mí, mi debuff en el objetivo, buff que me falta, recurso, proc de set/habilidad y estado de combate.
 - Formulario organizado en apartados (General, Cuándo se muestra con Efectos vigilados / Añadir efecto / Opciones, y Apariencia) que solo muestra las opciones que tienen sentido para cada aura.
-- El aura seleccionada se ve en pantalla y se mueve y redimensiona arrastrándola (esquina amarilla para el tamaño).
-- **Mover auras**: oculta el editor y muestra la interfaz de juego normal para colocar y redimensionar todas las auras a la vez; se termina con «Listo» o Esc.
+- Botón **Ubicar en pantalla**: muestra solo el aura que editas para moverla y redimensionarla arrastrándola (esquina amarilla para el tamaño), con una barra superior y «Listo» para terminar, sin cerrar el editor.
+- Mientras el editor está abierto, las auras activas se ocultan; solo se ve la que estás ubicando.
+- **Ubicar auras**: oculta el editor y muestra la interfaz de juego normal para colocar y redimensionar todas las auras a la vez; se termina con «Listo» o Esc.
 
 ### Qué se puede vigilar (triggers)
 - **Buff / debuff** en ti, tu objetivo o un jefe: activo o que falta, solo los tuyos, acumulaciones mínimas.
@@ -16,9 +18,10 @@
 - **Proc / evento de combate**: muestra el aura durante N segundos (procs de sets, cooldowns internos).
 - **Estado de combate**: dentro o fuera de combate.
 - Varios triggers por aura, con lógica "todos" o "alguno", y condición de carga (siempre, solo en combate, solo fuera).
+- **Usar en**: cada aura puede usarse en todos tus personajes o solo en uno.
 
 ### Elegir habilidades sin escribir IDs
-- Buscador en todas las habilidades del juego, agrupadas por nombre.
+- Buscador en todas las habilidades del juego, agrupadas por nombre. No se ofrecen las entradas de las habilidades pasivas en sí (solo modifican estadísticas y nunca aparecen como efecto); los bufos que activan sí, porque son efectos aparte.
 - Catálogo completo con categorías: bufos/perjuicios, las 7 clases, armas, armadura, gremios, mundo, guerra de alianzas, raciales, Mundus, compañeros, equipo y consumibles; con filtro por nombre y descripción emergente.
 - Atajos: efectos activos ahora, habilidades de tus barras y efectos/procs recientes.
 - Un aura puede vigilar varios efectos (se muestra si hay cualquiera de ellos); al añadir por nombre no se duplican IDs.

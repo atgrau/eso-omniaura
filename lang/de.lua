@@ -29,7 +29,7 @@ L.HELP = {
     "|cFFFF00/omni show <n>|r - Einstellungen der Aura anzeigen",
     "|cFFFF00/omni set <n> <pfad> <wert>|r - z.B. set 3 display.type bar",
     "|cFFFF00/omni on|off|del|copy <n>|r - aktivieren, deaktivieren, löschen, kopieren",
-    "|cFFFF00/omni unlock|lock|r - Auren mit der Maus verschieben",
+    "|cFFFF00/omni unlock|lock|r - alle Auren gleichzeitig auf dem Bildschirm platzieren",
     "|cFFFF00/omni scan [player|target]|r - aktuelle Effekte mit IDs auflisten",
     "|cFFFF00/omni log|r - Protokoll deiner Fähigkeits-IDs ein/aus",
 }
@@ -59,7 +59,8 @@ L.RESET_DONE = "Alle Auren gelöscht."
 
 -- Editor: Fenster
 L.EDITOR_NEW = "+ Neue Aura..."
-L.MOVE = "Auren verschieben"
+L.MOVE = "Auren platzieren"
+L.PLACE_THIS = "Platzieren"
 L.MOVE_HINT = "Ziehe die Auren an ihren Platz · gelbe Ecke: Größe"
 L.MOVE_DONE = "Fertig"
 L.EDITOR_EMPTY = "Noch keine Auren.\n\nErstelle eine mit „%s“ oben links."
@@ -115,7 +116,7 @@ L.DELETE = "Löschen"
 L.DELETE_TITLE = "Aura löschen"
 L.DELETE_TEXT = "Die Aura „<<1>>“ löschen?\nDas kann nicht rückgängig gemacht werden."
 L.COLOR_DEFAULT = "Standard"
-L.LOOK_HINT = "Ziehe die Aura auf dem Bildschirm, um sie zu verschieben; die gelbe Ecke ändert die Größe."
+L.LOOK_HINT = "Ziehe die Aura an ihren Platz · gelbe Ecke: Größe"
 L.TEXT_HELP = "Texte: {name} {time} {stacks} {value} {max} {percent}"
 
 -- Editor: Auswahlwerte
@@ -146,6 +147,9 @@ L.SOURCE_ANY = "Jeder"
 -- Editor: Felder
 L.F_NAME = "Name"
 L.F_ENABLED = "Aktiv"
+L.F_SCOPE = "Nutzen für"
+L.SCOPE_ACCOUNT = "Alle meine Charaktere"
+L.SCOPE_CHARACTER = "Nur dieser Charakter (%s)"
 L.F_LOAD = "Laden"
 L.F_SOUND = "Sound beim Anzeigen"
 L.F_LOGIC = "Anzeigen wenn"
@@ -177,9 +181,15 @@ L.F_BG_COLOR = "Hintergrundfarbe"
 L.F_TEXT = "Text"
 
 -- Einstellungen
-L.SETTINGS_DESC = "Auren werden im Editor erstellt und bearbeitet. Du kannst ihn auch mit |cFFFF00/omni|r im Chat öffnen "
-    .. "oder unter Steuerung > OmniAura eine Taste zuweisen."
+L.SETTINGS_DESC = "OmniAura zeigt deine eigenen Bildschirmhinweise (Symbole, Leisten oder Texte) für Buffs, Debuffs, Ressourcen, Procs und den Kampfstatus. Alles wird in einem visuellen Editor eingerichtet, ohne Fähigkeits-IDs einzutippen."
 L.OPEN_EDITOR = "Editor öffnen"
+L.HELP_BUTTON = "Hilfe"
+L.HELP_TITLE = "OmniAura-Hilfe"
+L.HELP_USAGE_HEADER = "So funktioniert es"
+L.HELP_USAGE = "1. Öffne den Editor mit |cFFFF00/omni|r, seiner Taste (Steuerung → OmniAura) oder dem Button oben.\n2. Erstelle eine Aura mit „+ Neue Aura...“ und wähle eine Vorlage.\n3. Suche unter „Effekt hinzufügen“ den Buff, Debuff oder Proc: Suche, Katalog, jetzt aktiv, deine Leisten oder zuletzt.\n4. Wähle unter „Aussehen“ die Darstellung (Symbol, Symbol + Text, Leiste oder Text) und klicke auf „Platzieren“, um sie zu verschieben und zu skalieren.\n5. Mit „Auren platzieren“ platzierst du alle gleichzeitig über der Spieloberfläche."
+L.HELP_TIPS_HEADER = "Tipps"
+L.HELP_TIPS = "- Eine Aura mit mehreren Effekten wird angezeigt, wenn EINER davon aktiv ist.\n- „Nutzen für“ legt fest, ob die Aura für alle Charaktere oder nur für diesen gilt.\n- Passive Fähigkeiten lassen sich nicht überwachen, der ausgelöste Buff schon: löse ihn aus und wähle ihn unter „Jetzt aktiv“ oder „Zuletzt“.\n- Hat der Effekt einer Fähigkeit einen anderen Namen, füge ihn ebenso über „Jetzt aktiv“ oder „Zuletzt“ hinzu.\n- In Texten kannst du {name} {time} {stacks} {value} {max} {percent} verwenden."
+L.HELP_COMMANDS_HEADER = "Chatbefehle"
 L.EDITOR_CREDITS = "v%s · von %s"
 L.DONATE_HEADER = "Den Autor unterstützen"
 L.DONATE_DESC = "Wenn dir OmniAura gefällt, kannst du %s etwas Gold schicken. Die Post öffnet sich vorausgefüllt, damit du den Betrag vor dem Senden prüfen kannst."

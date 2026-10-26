@@ -68,14 +68,56 @@ function S.ShowWelcomeIfNeeded()
     ZO_Dialogs_ShowDialog(WELCOME_DIALOG, nil, { titleParams = { title }, mainTextParams = { text } })
 end
 
+---------------------------------------------------------------------------
+-- Ayuda: se muestra en el panel de Ajustes (LibAddonMenu) o, sin esa librería,
+-- en una ventana emergente.
+---------------------------------------------------------------------------
+local HELP_DIALOG = "OMNIAURA_HELP"
+local GOLD = "|cC5B07A"
+
+local function CommandsText()
+    return type(L.HELP) == "table" and table.concat(L.HELP, "\n") or ""
+end
+
+local function HelpText()
+    return table.concat({
+        L.SETTINGS_DESC,
+        GOLD .. L.HELP_USAGE_HEADER .. "|r\n" .. L.HELP_USAGE,
+        GOLD .. L.HELP_TIPS_HEADER .. "|r\n" .. L.HELP_TIPS,
+        GOLD .. L.HELP_COMMANDS_HEADER .. "|r\n" .. CommandsText(),
+    }, "\n\n")
+end
+
+local function RegisterHelpDialog()
+    ZO_Dialogs_RegisterCustomDialog(HELP_DIALOG, {
+        title = { text = L.HELP_TITLE },
+        mainText = { text = "<<1>>" },
+        buttons = {
+            { text = L.OPEN_EDITOR, callback = function() OA.Editor.Show() end },
+            { text = GetString(SI_DIALOG_CLOSE) },
+        },
+    })
+end
+
+-- Botón "?" del editor.
+function S.OpenHelp()
+    local LAM = LibAddonMenu2
+    if LAM and S.panel then
+        LAM:OpenToPanel(S.panel)
+    else
+        ZO_Dialogs_ShowDialog(HELP_DIALOG, nil, { mainTextParams = { HelpText() } })
+    end
+end
+
 function S.Init()
     RegisterWelcomeDialog()
+    RegisterHelpDialog()
 
     local LAM = LibAddonMenu2
     if not LAM then return end
 
     local panelName = "OmniAuraOptions"
-    LAM:RegisterAddonPanel(panelName, {
+    S.panel = LAM:RegisterAddonPanel(panelName, {
         type = "panel",
         name = "OmniAura",
         displayName = "|c00C8FFOmni|rAura",
@@ -95,6 +137,12 @@ function S.Init()
             width = "half",
             func = function() OA.Editor.Show() end,
         },
+        { type = "header", name = L.HELP_USAGE_HEADER },
+        { type = "description", text = L.HELP_USAGE },
+        { type = "header", name = L.HELP_TIPS_HEADER },
+        { type = "description", text = L.HELP_TIPS },
+        { type = "header", name = L.HELP_COMMANDS_HEADER },
+        { type = "description", text = CommandsText() },
     }
 
     -- Solo en el megaservidor del autor.

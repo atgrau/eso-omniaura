@@ -6,14 +6,15 @@
 
 ## Features
 
-- **Visual editor** — type `/omni`, bind a key, or open it from *Settings → Add-Ons → OmniAura*. Create auras from ready-made templates and see the selected one live on screen.
-- **Drag to place and resize** — move the aura on screen with the mouse; drag its yellow corner to resize it. **Move auras** hides the editor and shows your normal game interface so you can place every aura at once.
+- **Visual editor** — type `/omni`, bind a key, or open it from *Settings → Add-Ons → OmniAura*. Create auras from ready-made templates.
+- **Drag to place and resize** — press *Position on screen* to move the aura you are editing with the mouse and resize it from its yellow corner. **Position auras** hides the editor and shows your normal game interface so you can place every aura at once.
 - **What you can track**
   - Buffs and debuffs on you, your target or a boss — while active or when missing, only yours, minimum stacks.
   - Health, magicka, stamina or ultimate, by value or percentage.
   - Procs and combat events, shown for a set number of seconds (set procs, internal cooldowns).
   - In or out of combat.
   - Several conditions per aura ("all" or "any"), and load conditions (always / only in combat / only out of combat).
+  - Each aura can be available on all your characters or only on one.
 - **Find any ability without IDs**
   - Search every ability in the game by name.
   - Browse a full **catalog** by category: major/minor buffs, debuffs, all seven classes, weapons, armor, guilds, world skills, Alliance War, racial, Mundus stones, companions, gear and consumables — with in-game tooltips.
@@ -38,7 +39,7 @@
 1. Type `/omni` to open the editor.
 2. Pick a template in **+ New aura...**, for example *Buff on me*.
 3. Choose the effect from the search, the **catalog** or your current effects.
-4. Drag the aura on screen to where you want it, then close the editor.
+4. Press *Position on screen* and drag it where you want it, or use **Position auras** to place all of them over your game interface.
 
 ## Chat commands (advanced)
 
@@ -49,7 +50,7 @@
 /omni set <n> <path> <value>    e.g. set 1 display.type bar
 /omni scan [player|target]      current effects with their IDs
 /omni log                 log the ability IDs you use
-/omni unlock | lock       enter/leave "Move auras" mode
+/omni unlock | lock       enter/leave "Position auras" mode
 /omni reset confirm       delete all auras
 ```
 

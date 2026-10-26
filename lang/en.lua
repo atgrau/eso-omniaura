@@ -29,7 +29,7 @@ L.HELP = {
     "|cFFFF00/omni show <n>|r - show the aura settings",
     "|cFFFF00/omni set <n> <path> <value>|r - e.g. set 3 display.type bar",
     "|cFFFF00/omni on|off|del|copy <n>|r - enable, disable, delete, duplicate",
-    "|cFFFF00/omni unlock|lock|r - move auras with the mouse",
+    "|cFFFF00/omni unlock|lock|r - position all auras on screen at once",
     "|cFFFF00/omni scan [player|target]|r - list current effects with their IDs",
     "|cFFFF00/omni log|r - toggle logging of the ability IDs you use",
 }
@@ -59,8 +59,9 @@ L.RESET_DONE = "All auras deleted."
 
 -- Editor: window
 L.EDITOR_NEW = "+ New aura..."
-L.MOVE = "Move auras"
-L.MOVE_HINT = "Drag the auras to place them · yellow corner: size"
+L.MOVE = "Position auras"
+L.PLACE_THIS = "Position on screen"
+L.MOVE_HINT = "Drag the auras to position them · yellow corner: size"
 L.MOVE_DONE = "Done"
 L.EDITOR_EMPTY = "No auras yet.\n\nCreate one with \"%s\" at the top left."
 L.COUNT_ONE = "%d aura"
@@ -115,7 +116,7 @@ L.DELETE = "Delete"
 L.DELETE_TITLE = "Delete aura"
 L.DELETE_TEXT = "Delete the aura \"<<1>>\"?\nThis cannot be undone."
 L.COLOR_DEFAULT = "Default"
-L.LOOK_HINT = "Drag the aura on screen to move it; use its yellow corner to resize it."
+L.LOOK_HINT = "Drag the aura to position it · yellow corner: size"
 L.TEXT_HELP = "Texts: {name} {time} {stacks} {value} {max} {percent}"
 
 -- Editor: choices
@@ -146,6 +147,9 @@ L.SOURCE_ANY = "Anyone"
 -- Editor: fields
 L.F_NAME = "Name"
 L.F_ENABLED = "Enabled"
+L.F_SCOPE = "Use on"
+L.SCOPE_ACCOUNT = "All my characters"
+L.SCOPE_CHARACTER = "Only this character (%s)"
 L.F_LOAD = "Load"
 L.F_SOUND = "Sound on show"
 L.F_LOGIC = "Show if"
@@ -177,9 +181,15 @@ L.F_BG_COLOR = "Background color"
 L.F_TEXT = "Text"
 
 -- Settings panel
-L.SETTINGS_DESC = "Auras are created and edited in the editor. You can also open it by typing |cFFFF00/omni|r in chat "
-    .. "or by binding a key in Controls > OmniAura."
+L.SETTINGS_DESC = "OmniAura shows your own on-screen alerts — icons, bars or text — for buffs, debuffs, resources, procs and combat state. Everything is set up in a visual editor, without typing ability IDs."
 L.OPEN_EDITOR = "Open editor"
+L.HELP_BUTTON = "Help"
+L.HELP_TITLE = "OmniAura help"
+L.HELP_USAGE_HEADER = "How to use it"
+L.HELP_USAGE = "1. Open the editor with |cFFFF00/omni|r, its key (Controls → OmniAura) or the button above.\n2. Create an aura with \"+ New aura...\" by picking a template.\n3. In \"Add effect\", find the buff, debuff or proc to watch: search, catalog, active now, your bars or recent.\n4. In \"Appearance\", choose how it looks (icon, icon + text, bar or text) and press \"Position on screen\" to move and resize it.\n5. Use \"Position auras\" to place all of them at once over your game interface."
+L.HELP_TIPS_HEADER = "Tips"
+L.HELP_TIPS = "- An aura with several effects is shown if ANY of them is active.\n- \"Use on\" decides whether the aura is for all your characters or only this one.\n- Passive skills cannot be tracked, but the buff they trigger can: make it happen and pick it in \"Active now\" or \"Recent\".\n- If a skill's effect has a different name, add it the same way, from \"Active now\" or \"Recent\".\n- In texts you can use {name} {time} {stacks} {value} {max} {percent}."
+L.HELP_COMMANDS_HEADER = "Chat commands"
 L.EDITOR_CREDITS = "v%s · by %s"
 L.DONATE_HEADER = "Support the author"
 L.DONATE_DESC = "If you enjoy OmniAura you can send some gold to %s. The mail opens pre-filled so you can review the amount before sending it."

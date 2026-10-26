@@ -1,5 +1,5 @@
--- Índice de todas las habilidades/efectos del juego para buscarlas por nombre y explorarlas
--- por categorías. El juego no ofrece una lista, así que se recorren los IDs una vez
+-- Índice de todas las habilidades/efectos del juego (salvo pasivas) para buscarlas por
+-- nombre y explorarlas por categorías. El juego no ofrece una lista, así que se recorren los IDs una vez
 -- (repartido entre fotogramas para no congelar el juego) y se agrupan por nombre.
 
 local OA = OmniAura
@@ -15,6 +15,7 @@ local FINALIZE_CHUNK = 1500    -- grupos por fotograma al preparar nombres, icon
 local STOP_AFTER_EMPTY = 40000 -- tras este hueco sin habilidades (pasado MIN_ID) se da por terminado
 local MIN_ID = 200000
 local ICON_PROBES = 3
+local PASSIVE_PROBES = 12
 local DEFAULT_ICON = "/esoui/art/icons/icon_missing.dds"
 
 ---------------------------------------------------------------------------
@@ -49,6 +50,24 @@ local function Categorize(icon)
     return CATEGORY_BY_PREFIX[prefix or ""] or "other"
 end
 
+-- Las pasivas solo modifican estadísticas: nunca aparecen como efecto en una unidad
+-- ni se pueden detectar, así que no se ofrecen para elegir. Por seguridad, cualquier
+-- cosa con duración se conserva aunque el juego la marque como pasiva (p. ej. el
+-- efecto temporal que pone una pasiva al activarse).
+local function IsPassive(abilityId)
+    if not (IsAbilityPassive and IsAbilityPassive(abilityId)) then return false end
+    local duration = GetAbilityDuration and GetAbilityDuration(abilityId)
+    return not duration or duration <= 0
+end
+
+-- Un nombre se descarta solo si todas sus variantes comprobadas son pasivas.
+local function IsPassiveGroup(ids)
+    for k = 1, math.min(#ids, PASSIVE_PROBES) do
+        if not IsPassive(ids[k]) then return false end
+    end
+    return true
+end
+
 local function IsRealIcon(icon)
     return icon ~= nil and icon ~= "" and not icon:find("icon_missing", 1, true)
 end
@@ -70,7 +89,7 @@ local function Finish()
     -- Descarta nombres vacíos, ordena alfabéticamente y cuenta por categoría.
     local kept, counts = {}, { all = 0 }
     for _, g in ipairs(A.groups) do
-        if g.display ~= "" then
+        if g.display ~= "" and not g.passive then
             kept[#kept + 1] = g
             counts[g.cat] = (counts[g.cat] or 0) + 1
             counts.all = counts.all + 1
@@ -93,6 +112,7 @@ local function FinalizeStep()
         g.display = U.FormatName(g.raw)
         g.lname = zo_strlower(g.display)
         g.raw = nil
+        g.passive = IsPassiveGroup(g.ids)
         for k = 1, math.min(#g.ids, ICON_PROBES) do
             local icon = GetAbilityIcon(g.ids[k])
             if IsRealIcon(icon) then
@@ -170,7 +190,7 @@ function A.Search(query, maxResults)
 
     -- Búsqueda directa por ID
     local qid = tonumber(q)
-    if qid then
+    if qid and not IsPassive(qid) then
         local raw = GetAbilityName(qid)
         if raw and raw ~= "" then
             local icon = GetAbilityIcon(qid)

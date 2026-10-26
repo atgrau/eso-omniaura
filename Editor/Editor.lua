@@ -83,6 +83,13 @@ local SOUND_KEYS = {
 local GENERAL_FIELDS = {
     { key = "name", label = L.F_NAME, kind = "text", required = true },
     { key = "enabled", label = L.F_ENABLED, kind = "bool", default = true },
+    { key = "scope", label = L.F_SCOPE, kind = "choice", default = "account",
+      choices = function()
+          return {
+              { "account", L.SCOPE_ACCOUNT },
+              { "character", string.format(L.SCOPE_CHARACTER, zo_strformat("<<1>>", GetUnitName("player"))) },
+          }
+      end },
     { key = "load.combat", label = L.F_LOAD, kind = "choice", default = "any",
       choices = { { "any", L.LOAD_ANY }, { "in", L.LOAD_IN }, { "out", L.LOAD_OUT } } },
     { key = "sound", label = L.F_SOUND, kind = "sound" },
@@ -408,7 +415,11 @@ local function Changed(rerender)
 end
 
 local function Commit(aura, path, value, rerender)
-    U.SetPath(aura, path, value)
+    if path == "scope" then
+        OA.Engine.SetScope(aura, value)
+    else
+        U.SetPath(aura, path, value)
+    end
     if path == "name" then aura.autoName = nil end
     Changed(rerender)
 end
@@ -706,7 +717,8 @@ local function Field(aura, f, path)
         end
 
     elseif kind == "choice" then
-        ChoiceRow(f.label, f.choices, FieldValue(aura, path, f), function(value)
+        local choices = type(f.choices) == "function" and f.choices() or f.choices
+        ChoiceRow(f.label, choices, FieldValue(aura, path, f), function(value)
             if value ~= FieldValue(aura, path, f) then Commit(aura, path, value, f.rerender) end
         end)
 
@@ -846,7 +858,10 @@ function Ed.Render()
 
     Header(L.H_LOOK)
     Field(aura, DISPLAY_TYPE_FIELD, "display.type")
-    Note(L.LOOK_HINT)
+    ButtonRow({ { Ed.placing and L.MOVE_DONE or L.PLACE_THIS, function()
+        Ed.SetPlacing(not Ed.placing)
+        Ed.RequestRender()
+    end } })
     local dtype = aura.display.type
     local displayCtx = { caps = caps, aura = aura, d = aura.display }
     local anyText = false
@@ -970,10 +985,7 @@ function Ed.Select(id)
     end
     Ed.selectedId = id
     Ed.trigIndex = 1
-    if Ed.IsShown() then
-        OA.previewId = id
-        OA.Display.RefreshUnlocked()
-    end
+    Ed.SetPlacing(false)
     Ed.RefreshList()
     Ed.RequestRender()
 end
@@ -1029,6 +1041,24 @@ local function Build()
     collapse:SetHandler("OnMouseExit", function() ClearTooltip(InformationTooltip) end)
     Ed.collapseBtn = collapse
 
+    -- Ayuda: abre la sección de OmniAura en Ajustes (o una ventana si no hay LibAddonMenu).
+    local help = WM:CreateControl("OmniAuraEditorHelp", win, CT_BUTTON)
+    help:SetDimensions(28, 28)
+    help:SetFont("ZoFontWinH3")
+    help:SetNormalFontColor(0.8, 0.8, 0.8, 1)
+    help:SetMouseOverFontColor(1, 1, 1, 1)
+    help:SetText("?")
+    help:SetAnchor(RIGHT, collapse, LEFT, -6, 0)
+    help:SetHandler("OnClicked", function()
+        ClearTooltip(InformationTooltip)
+        OA.Settings.OpenHelp()
+    end)
+    help:SetHandler("OnMouseEnter", function()
+        InitializeTooltip(InformationTooltip, help, BOTTOM, 0, -4)
+        SetTooltipText(InformationTooltip, L.HELP_BUTTON)
+    end)
+    help:SetHandler("OnMouseExit", function() ClearTooltip(InformationTooltip) end)
+
     -- Enlace para donar (solo en el megaservidor del autor).
     if OA.Settings and OA.Settings.CanDonate() then
         local donate = WM:CreateControl("OmniAuraEditorDonate", win, CT_BUTTON)
@@ -1037,7 +1067,7 @@ local function Build()
         donate:SetNormalFontColor(unpack(GOLD))
         donate:SetMouseOverFontColor(1, 0.9, 0.6, 1)
         donate:SetText(zo_iconFormat(GOLD_ICON, 16, 16) .. " " .. L.DONATE_BUTTON)
-        donate:SetAnchor(RIGHT, collapse, LEFT, -8, 0)
+        donate:SetAnchor(RIGHT, help, LEFT, -8, 0)
         donate:SetHandler("OnClicked", function() OA.Settings.ComposeDonation() end)
     end
 
@@ -1113,26 +1143,38 @@ local function Build()
 end
 
 function Ed.OnShow()
+    OA.editorOpen = true
     if not (Ed.selectedId and OA.sv.auras[Ed.selectedId]) then
         Ed.selectedId = OA.Engine.SortedIds()[1]
         Ed.trigIndex = 1
     end
-    OA.previewId = Ed.selectedId
-    OA.Display.RefreshUnlocked()
+    Ed.SetPlacing(false)
     Ed.RefreshList()
     Ed.Render()
 end
 
 function Ed.OnHide()
+    OA.editorOpen = false
     OA.Catalog.Hide()
     ReleaseRows()
+    Ed.placing = false
     OA.previewId = nil
+    if not Ed.moveMode then Ed.ShowMoveBar(false) end
     if OA.unlocked and not Ed.moveMode then Ed.SetUnlocked(false) else OA.Display.RefreshUnlocked() end
 end
 
 ---------------------------------------------------------------------------
 -- API pública
 ---------------------------------------------------------------------------
+-- Botón "Ubicar en pantalla": muestra solo el aura seleccionada
+-- en modo edición (fondo azul, arrastrar para mover, esquina para el tamaño).
+function Ed.SetPlacing(on)
+    Ed.placing = on and Ed.selectedId ~= nil
+    OA.previewId = Ed.placing and Ed.selectedId or nil
+    OA.Display.RefreshUnlocked()
+    if not Ed.moveMode then Ed.ShowMoveBar(Ed.placing, L.LOOK_HINT) end
+end
+
 function Ed.IsShown()
     return SCENE_MANAGER:IsShowing(SCENE_NAME)
 end
@@ -1143,9 +1185,10 @@ function Ed.Toggle() SCENE_MANAGER:Toggle(SCENE_NAME) end
 
 function Ed.RefreshIfShown()
     if Ed.IsShown() then
-        if not OA.sv.auras[Ed.selectedId or 0] then Ed.selectedId = OA.Engine.SortedIds()[1] end
-        OA.previewId = Ed.selectedId
-        OA.Display.RefreshUnlocked()
+        if not OA.sv.auras[Ed.selectedId or 0] then
+            Ed.selectedId = OA.Engine.SortedIds()[1]
+            Ed.SetPlacing(false)
+        end
         Ed.RefreshList()
         Ed.RequestRender()
     end
@@ -1205,7 +1248,7 @@ function Ed.SetCollapsed(collapsed)
 end
 
 ---------------------------------------------------------------------------
--- Modo "Mover auras": oculta el editor y muestra el HUD normal con cursor
+-- Modo "Ubicar auras": oculta el editor y muestra el HUD normal con cursor
 -- (escena "hudui", la misma que al pulsar la tecla del cursor jugando) para
 -- colocar todas las auras viendo la interfaz real.
 ---------------------------------------------------------------------------
@@ -1224,30 +1267,45 @@ local function BuildMoveBar()
     hint:SetFont("ZoFontGame")
     hint:SetColor(0.9, 0.9, 0.9, 1)
     hint:SetText(L.MOVE_HINT)
+    Ed.moveHint = hint
     hint:SetAnchor(LEFT, bar, LEFT, 16, 0)
 
     local done = WM:CreateControlFromVirtual("OmniAuraMoveBarDone", bar, "ZO_DefaultButton")
     done:SetDimensions(120, 30)
     done:SetText(L.MOVE_DONE)
     done:SetAnchor(RIGHT, bar, RIGHT, -12, 0)
-    done:SetHandler("OnClicked", function() Ed.EndMoveMode(true) end)
+    done:SetHandler("OnClicked", function()
+        if Ed.moveMode then
+            Ed.EndMoveMode(true)
+        else
+            Ed.SetPlacing(false)
+            Ed.RequestRender()
+        end
+    end)
 
     Ed.moveBar = bar
 end
 
+function Ed.ShowMoveBar(show, hint)
+    if not Ed.moveBar then return end
+    if hint then Ed.moveHint:SetText(hint) end
+    Ed.moveBar:SetHidden(not show)
+end
+
 function Ed.StartMoveMode()
     if Ed.moveMode then return end
+    Ed.SetPlacing(false)
     Ed.moveMode = true
     SCENE_MANAGER:Show("hudui")
     OA.Display.SetUnlocked(true)
-    Ed.moveBar:SetHidden(false)
+    Ed.ShowMoveBar(true, L.MOVE_HINT)
 end
 
 -- reopenEditor: volver al editor al terminar (botón "Listo").
 function Ed.EndMoveMode(reopenEditor)
     if not Ed.moveMode then return end
     Ed.moveMode = false
-    Ed.moveBar:SetHidden(true)
+    Ed.ShowMoveBar(false)
     OA.Display.SetUnlocked(false)
     if reopenEditor then Ed.Show() end
 end

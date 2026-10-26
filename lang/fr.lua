@@ -29,7 +29,7 @@ L.HELP = {
     "|cFFFF00/omni show <n>|r - afficher les réglages de l'aura",
     "|cFFFF00/omni set <n> <chemin> <valeur>|r - ex. : set 3 display.type bar",
     "|cFFFF00/omni on|off|del|copy <n>|r - activer, désactiver, supprimer, dupliquer",
-    "|cFFFF00/omni unlock|lock|r - déplacer les auras à la souris",
+    "|cFFFF00/omni unlock|lock|r - placer toutes les auras à l'écran en même temps",
     "|cFFFF00/omni scan [player|target]|r - lister les effets actuels avec leurs IDs",
     "|cFFFF00/omni log|r - activer/désactiver le journal des IDs de vos compétences",
 }
@@ -59,8 +59,9 @@ L.RESET_DONE = "Toutes les auras ont été supprimées."
 
 -- Éditeur : fenêtre
 L.EDITOR_NEW = "+ Nouvelle aura..."
-L.MOVE = "Déplacer les auras"
-L.MOVE_HINT = "Faites glisser les auras · coin jaune : taille"
+L.MOVE = "Placer les auras"
+L.PLACE_THIS = "Placer à l'écran"
+L.MOVE_HINT = "Faites glisser les auras pour les placer · coin jaune : taille"
 L.MOVE_DONE = "Terminé"
 L.EDITOR_EMPTY = "Aucune aura pour l'instant.\n\nCréez-en une avec « %s » en haut à gauche."
 L.COUNT_ONE = "%d aura"
@@ -115,7 +116,7 @@ L.DELETE = "Supprimer"
 L.DELETE_TITLE = "Supprimer l'aura"
 L.DELETE_TEXT = "Supprimer l'aura « <<1>> » ?\nCette action est irréversible."
 L.COLOR_DEFAULT = "Par défaut"
-L.LOOK_HINT = "Faites glisser l'aura à l'écran pour la déplacer ; son coin jaune permet de la redimensionner."
+L.LOOK_HINT = "Faites glisser l'aura pour la placer · coin jaune : taille"
 L.TEXT_HELP = "Textes : {name} {time} {stacks} {value} {max} {percent}"
 
 -- Éditeur : choix
@@ -146,6 +147,9 @@ L.SOURCE_ANY = "N'importe qui"
 -- Éditeur : champs
 L.F_NAME = "Nom"
 L.F_ENABLED = "Active"
+L.F_SCOPE = "Utiliser sur"
+L.SCOPE_ACCOUNT = "Tous mes personnages"
+L.SCOPE_CHARACTER = "Ce personnage uniquement (%s)"
 L.F_LOAD = "Charger"
 L.F_SOUND = "Son à l'apparition"
 L.F_LOGIC = "Afficher si"
@@ -177,9 +181,15 @@ L.F_BG_COLOR = "Couleur du fond"
 L.F_TEXT = "Texte"
 
 -- Réglages
-L.SETTINGS_DESC = "Les auras se créent et se modifient dans l'éditeur. Vous pouvez aussi l'ouvrir en tapant |cFFFF00/omni|r "
-    .. "dans le chat ou en assignant une touche dans Commandes > OmniAura."
+L.SETTINGS_DESC = "OmniAura affiche vos propres alertes à l'écran (icônes, barres ou textes) pour les buffs, débuffs, ressources, procs et l'état de combat. Tout se règle dans un éditeur visuel, sans saisir d'ID de compétence."
 L.OPEN_EDITOR = "Ouvrir l'éditeur"
+L.HELP_BUTTON = "Aide"
+L.HELP_TITLE = "Aide d'OmniAura"
+L.HELP_USAGE_HEADER = "Mode d'emploi"
+L.HELP_USAGE = "1. Ouvrez l'éditeur avec |cFFFF00/omni|r, sa touche (Commandes → OmniAura) ou le bouton ci-dessus.\n2. Créez une aura avec « + Nouvelle aura... » en choisissant un modèle.\n3. Dans « Ajouter un effet », trouvez le buff, débuff ou proc à surveiller : recherche, catalogue, actifs maintenant, vos barres ou récents.\n4. Dans « Apparence », choisissez l'affichage (icône, icône + texte, barre ou texte) et cliquez sur « Placer à l'écran » pour la déplacer et la redimensionner.\n5. Utilisez « Placer les auras » pour toutes les placer en même temps sur l'interface de jeu."
+L.HELP_TIPS_HEADER = "Conseils"
+L.HELP_TIPS = "- Une aura avec plusieurs effets s'affiche si L'UN d'eux est actif.\n- « Utiliser sur » décide si l'aura vaut pour tous vos personnages ou seulement celui-ci.\n- Les compétences passives ne peuvent pas être surveillées, mais le buff qu'elles déclenchent oui : déclenchez-le et choisissez-le dans « Actifs maintenant » ou « Récents ».\n- Si l'effet d'une compétence porte un autre nom, ajoutez-le de la même façon, depuis « Actifs maintenant » ou « Récents ».\n- Dans les textes, vous pouvez utiliser {name} {time} {stacks} {value} {max} {percent}."
+L.HELP_COMMANDS_HEADER = "Commandes du chat"
 L.EDITOR_CREDITS = "v%s · par %s"
 L.DONATE_HEADER = "Soutenir l'auteur"
 L.DONATE_DESC = "Si OmniAura vous plaît, vous pouvez envoyer un peu d'or à %s. Le courrier s'ouvre pré-rempli pour que vous vérifiiez le montant avant l'envoi."
