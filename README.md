@@ -80,7 +80,11 @@
 
 ## Support
 
-Bug reports and ideas are welcome in [Issues](../../issues). If you enjoy the addon, you can send some gold in-game to **@Artioner** (EU megaserver) — there is a *Donate gold* button in the editor.
+Bug reports and ideas are welcome in [Issues](../../issues).
+
+If you enjoy OmniAura, you can support it:
+- On [Ko-fi](https://ko-fi.com/artion).
+- With gold in-game to **@Artioner** (EU megaserver) — there is a *Donate gold* button in the editor.
 
 ## Development
 

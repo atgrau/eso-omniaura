@@ -96,6 +96,14 @@ Bindings.xml            tecla para abrir el editor
 3. Revisar `## APIVersion` (en el juego: `/script d(GetAPIVersion())`).
 4. Empaquetar la carpeta `OmniAura/` en un zip (el zip debe contener la carpeta, no los archivos sueltos).
 
+## Apoyo
+
+Los errores e ideas son bienvenidos en [Issues](../../issues).
+
+Si te gusta OmniAura, puedes apoyarlo:
+- En [Ko-fi](https://ko-fi.com/artion).
+- Con oro dentro del juego a **@Artioner** (megaservidor EU), con el botón *Donar oro* del editor.
+
 ## Licencia
 
 Copyright (C) 2026 @Artioner. OmniAura es software libre bajo la [GNU General Public License v3.0](LICENSE): puedes redistribuirlo y modificarlo con esas condiciones, manteniendo el crédito del autor y publicando tus cambios con la misma licencia.
