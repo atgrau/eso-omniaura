@@ -4,7 +4,7 @@ OmniAura = OmniAura or {}
 local OA = OmniAura
 
 OA.name = "OmniAura"
-OA.version = "1.0.0"
+OA.version = "1.1.0"
 OA.svVersion = 1
 OA.author = "@Artioner"
 OA.authorServer = "EU Megaserver"   -- el correo (donaciones) solo llega dentro del mismo megaservidor

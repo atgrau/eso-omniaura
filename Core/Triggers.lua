@@ -121,6 +121,64 @@ T.types.buff = {
 }
 
 ---------------------------------------------------------------------------
+-- slot: acumulaciones y tiempo que el juego muestra sobre una habilidad de tus
+-- barras (p. ej. Latigazo ardiente → Azote poderoso). No siempre hay un buff
+-- visible con esas acumulaciones, así que se leen del propio hueco.
+--   spells = {id|nombre, ...}   minStacks = n
+---------------------------------------------------------------------------
+local SLOT_BARS = { HOTBAR_CATEGORY_PRIMARY, HOTBAR_CATEGORY_BACKUP }
+
+local function SlotMatches(rt, id, bar)
+    if rt.ids[id] or rt.names[zo_strlower(U.AbilityName(id))] then return true end
+    -- La habilidad puede transformarse en el hueco (Latigazo ardiente → Azote poderoso).
+    if GetEffectiveAbilityIdForAbilityOnHotbar then
+        local eff = GetEffectiveAbilityIdForAbilityOnHotbar(id, bar)
+        if eff and eff ~= id and eff > 0 then
+            return rt.ids[eff] or rt.names[zo_strlower(U.AbilityName(eff))]
+        end
+    end
+    return false
+end
+
+T.types.slot = {
+    Prepare = function(trig, rt)
+        BuildMatcher(trig.spells, rt, trig.spellIcons)
+    end,
+
+    Check = function(trig, rt, ctx)
+        local best
+        for _, bar in ipairs(SLOT_BARS) do
+            for slot = 3, 8 do
+                local id = GetSlotBoundId(slot, bar)
+                if id and id > 0 and SlotMatches(rt, id, bar) then
+                    local stacks = GetActionSlotEffectStackCount(slot, bar) or 0
+                    local remaining = (GetActionSlotEffectTimeRemaining(slot, bar) or 0) / 1000
+                    if stacks > 0 or remaining > 0 then
+                        if not best or stacks > best.stacks or (stacks == best.stacks and remaining > best.remaining) then
+                            best = { slot = slot, bar = bar, stacks = stacks, remaining = remaining }
+                        end
+                    end
+                end
+            end
+        end
+        if not best then return false end
+        if trig.minStacks and best.stacks < trig.minStacks then return false end
+
+        local state = {
+            name = U.NonEmpty(U.FormatName(GetSlotName(best.slot, best.bar))) or rt.label,
+            icon = U.NonEmpty(GetSlotTexture(best.slot, best.bar)) or rt.icon,
+            stacks = best.stacks,
+        }
+        local duration = (GetActionSlotEffectDuration(best.slot, best.bar) or 0) / 1000
+        if best.remaining > 0 and duration > 0 then
+            state.expires = ctx.now + best.remaining
+            state.duration = duration
+        end
+        return true, state
+    end,
+}
+
+---------------------------------------------------------------------------
 -- resource: salud/magia/aguante/definitiva comparada con un umbral
 --   unit, power = "health"|"magicka"|"stamina"|"ultimate", op = "<"|">"..., value = n, percent = bool
 ---------------------------------------------------------------------------

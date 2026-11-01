@@ -34,6 +34,7 @@
 - **Drag to place and resize** — *Position on screen* closes the editor and shows the aura you are editing over your game interface; drag it to move it and use its yellow corner to resize it, then press *Done* to return to the editor. **Position auras** hides the editor and shows your normal game interface so you can place every aura at once.
 - **What you can track**
   - Buffs and debuffs on you, your target or a boss — while active or when missing, only yours, minimum stacks.
+  - Stacks and timer shown on a skill on your bars (for example Flame Lash → Power Lash), even when no buff carries them.
   - Health, magicka, stamina or ultimate, by value or percentage.
   - Procs and combat events, shown for a set number of seconds (set procs, internal cooldowns).
   - In or out of combat.

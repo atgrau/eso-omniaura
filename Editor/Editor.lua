@@ -55,7 +55,7 @@ local UNIT_CHOICES = {
     { "boss1", string.format(L.UNIT_BOSS, 1) }, { "boss2", string.format(L.UNIT_BOSS, 2) },
 }
 local TRIGGER_TYPES = {
-    { "buff", L.TRIG_BUFF }, { "resource", L.TRIG_RESOURCE },
+    { "buff", L.TRIG_BUFF }, { "slot", L.TRIG_SLOT }, { "resource", L.TRIG_RESOURCE },
     { "proc", L.TRIG_PROC }, { "combat", L.TRIG_COMBAT },
 }
 local DISPLAY_TYPES = {
@@ -115,6 +115,10 @@ local TRIGGER_FIELDS = {
           choices = { { "active", L.SHOW_ACTIVE }, { "missing", L.SHOW_MISSING } } },
         { key = "minStacks", label = L.F_MIN_STACKS, kind = "number", options = true,
           show = function(ctx) return ctx.trig.show ~= "missing" end },
+    },
+    slot = {
+        { key = "spells", kind = "spells", mode = "slot" },
+        { key = "minStacks", label = L.F_MIN_STACKS, kind = "number", options = true },
     },
     resource = {
         { key = "unit", label = L.F_UNIT, kind = "choice", choices = UNIT_CHOICES, default = "player" },
@@ -180,6 +184,9 @@ local TEMPLATES = {
     end },
     { L.TPL_MISSING, function()
         return L.NAME_MISSING, { { type = "buff", unit = "player", show = "missing", spells = {} } }, { type = "icon" }
+    end },
+    { L.TPL_SLOT, function()
+        return L.NAME_NEW_SLOT, { { type = "slot", spells = {} } }, { type = "icon", text = "{stacks}", text2 = "{time}" }
     end },
     { L.TPL_RESOURCE, function()
         return L.NAME_LOW_HEALTH, { { type = "resource", unit = "player", power = "health", op = "<", value = 50, percent = true } },
@@ -533,9 +540,10 @@ local function AddSpell(aura, trig, entry, mode)
     if mode == "proc" and entry.ids then
         -- Los eventos de combate se filtran por ID: se añaden las variantes.
         for i = 1, math.min(#entry.ids, MAX_PROC_IDS) do Add(entry.ids[i]) end
-    elseif mode == "buff" and (entry.slotted or (entry.ids and #entry.ids > 1)) then
+    elseif mode == "slot" or (mode == "buff" and (entry.slotted or (entry.ids and #entry.ids > 1))) then
         -- Por nombre: cubre todas las variantes (el buff que deja una habilidad suele
         -- tener otro ID pero el mismo nombre). Los IDs sueltos con ese nombre sobran.
+        -- En las barras igual: rangos y morfos con el mismo nombre tienen otro ID.
         for i = #spells, 1, -1 do
             if type(spells[i]) == "number" and SpellLName(spells[i]) == lname then table.remove(spells, i) end
         end
@@ -711,6 +719,9 @@ local function Field(aura, f, path)
             elseif f.required then
                 row.edit:SetText(shown)
                 return
+            elseif kind == "text" then
+                -- Vacío a propósito: se guarda "" para que no vuelva el texto por defecto.
+                value = ""
             end
             shown = newText
             Commit(aura, path, value, f.rerender)
@@ -799,6 +810,8 @@ local function Capabilities(aura)
             else
                 caps.time, caps.stacks = true, true
             end
+        elseif t.type == "slot" then
+            caps.time, caps.stacks = true, true
         elseif t.type == "proc" then
             caps.time = true
         elseif t.type == "resource" then

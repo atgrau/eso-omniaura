@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0
+
+- Nuevo trigger **Habilidad en mis barras (acumulaciones)**: muestra las acumulaciones y el tiempo que el juego pinta sobre una habilidad de tus barras (p. ej. Latigazo ardiente → Azote poderoso), aunque no haya un buff que los lleve. Plantilla «Acumulaciones de una habilidad de mis barras».
+- `{stacks}` muestra también una sola acumulación (antes solo aparecía a partir de 2).
+- Los textos de la apariencia (texto central, de esquina, etc.) se pueden dejar vacíos; antes volvía el texto por defecto.
+
 ## 1.0.0 — primera versión pública
 
 ### Editor

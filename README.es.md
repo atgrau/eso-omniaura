@@ -6,7 +6,7 @@
 
 **Tus propios avisos en pantalla para The Elder Scrolls Online.** Vigila buffs, debuffs, recursos, procs de sets y el estado de combate, y muéstralos como iconos, barras o textos justo donde quieras, todo desde un editor visual dentro del juego y sin escribir ni un solo ID.
 
-Versión actual: **1.0.0** (ver [CHANGELOG.md](CHANGELOG.md)).
+Versión actual: **1.1.0** (ver [CHANGELOG.md](CHANGELOG.md)).
 
 <details>
 <summary><b>Capturas</b> (9)</summary>
@@ -34,7 +34,7 @@ Versión actual: **1.0.0** (ver [CHANGELOG.md](CHANGELOG.md)).
 
 - `/omni` abre y cierra el editor. También desde *Ajustes → Add-Ons → OmniAura* o con una tecla en *Controles → OmniAura*.
 - **+ Nueva aura...** crea un aura a partir de una plantilla.
-- En las auras de buff y proc, los efectos se eligen con el buscador, el **catálogo** o los atajos (efectos actuales, habilidades de tus barras, recientes). Un aura con varios efectos se muestra si hay *cualquiera* de ellos.
+- En las auras de buff, proc y habilidad de la barra, los efectos se eligen con el buscador, el **catálogo** o los atajos (efectos actuales, habilidades de tus barras, recientes). Un aura con varios efectos se muestra si hay *cualquiera* de ellos.
 - El botón **Ubicar en pantalla** (al final de Apariencia) cierra el editor y muestra el aura que editas sobre la interfaz de juego: se arrastra para moverla, su esquina amarilla cambia el tamaño y «Listo» vuelve al editor.
 - **Ubicar auras** (debajo de la lista) oculta el editor y muestra la interfaz de juego normal para colocar todas las auras a la vez; se termina con «Listo» o Esc.
 - La flecha junto a la X pliega el editor. Mientras está abierto, las auras activas no se muestran.
@@ -73,7 +73,7 @@ OmniAura.txt            manifiesto
 OmniAura.lua            namespace, SavedVariables, arranque, bienvenida
 lang/*.lua              textos (en = base; es, de, fr sobrescriben)
 Core/Utils.lua          parseo, rutas, formato de tiempo, plantillas de texto
-Core/Triggers.lua       tipos de trigger (buff, resource, proc, combat)
+Core/Triggers.lua       tipos de trigger (buff, slot, resource, proc, combat)
 Core/Recent.lua         efectos/habilidades vistos recientemente
 Core/AbilityIndex.lua   índice de todas las habilidades del juego (búsqueda y catálogo)
 Core/Engine.lua         evaluación de auras cada 100 ms; alta/copia/borrado
