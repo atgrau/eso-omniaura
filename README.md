@@ -2,6 +2,8 @@
 
 *English · [Español](README.es.md)*
 
+> **AI disclosure:** OmniAura's code was written with the help of an AI coding assistant (Claude, by Anthropic). The author has reviewed it and tested it in game.
+
 ![OmniAura](screenshots/01-help.png)
 
 **Your own on-screen alerts for The Elder Scrolls Online.** Track buffs, debuffs, resources, set procs and combat state, and show them as icons, bars or text exactly where you want them — all from an in-game visual editor, without typing a single ability ID.
@@ -86,6 +88,11 @@ Bug reports and ideas are welcome in [Issues](../../issues).
 If you enjoy OmniAura, you can support it:
 - On [Ko-fi](https://ko-fi.com/artion).
 - With gold in-game to **@Artioner** (EU megaserver) — there is a *Donate gold* button in the editor.
+
+## Credits
+
+- [LibAddonMenu-2.0](https://www.esoui.com/downloads/info7-LibAddonMenu.html) by sirinsidiator and Seerah (optional): the *Settings → Add-Ons* panel.
+- Icons, sounds and the names of resources, classes, weapons and skill lines come from the game itself.
 
 ## Development
 

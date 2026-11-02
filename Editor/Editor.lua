@@ -69,11 +69,11 @@ local OP_CHOICES = {
     { "<", L.OP_LT }, { "<=", L.OP_LE }, { ">", L.OP_GT }, { ">=", L.OP_GE },
 }
 
--- Sonidos ofrecidos en el selector (solo se muestran los que existen en esta versión del juego).
+-- Sonidos ofrecidos en el selector (claves de la tabla SOUNDS del juego).
 local SOUND_KEYS = {
     "ABILITY_ULTIMATE_READY", "ABILITY_SYNERGY_READY", "ABILITY_COMPANION_ULTIMATE_READY",
     "NEW_NOTIFICATION", "GENERAL_ALERT_ERROR", "DUEL_START", "DUEL_WON", "LEVEL_UP",
-    "CHAMPION_POINT_GAINED", "SKILL_GAINED", "QUEST_COMPLETED", "ACHIEVEMENT_AWARDED",
+    "CHAMPION_POINT_GAINED", "QUEST_COMPLETED", "ACHIEVEMENT_AWARDED",
     "TELVAR_GAINED", "BOOK_ACQUIRED", "COLLECTIBLE_UNLOCKED", "OBJECTIVE_DISCOVERED",
     "ENLIGHTENED_STATE_GAINED", "LOCKPICKING_BREAK", "LOCKPICKING_SUCCESS_CELEBRATION",
     "RAID_TRIAL_COMPLETED", "RAID_TRIAL_FAILED", "MAP_PING", "POSITIVE_CLICK", "NEGATIVE_CLICK",
@@ -736,7 +736,7 @@ local function Field(aura, f, path)
     elseif kind == "sound" then
         local choices = { { false, L.SOUND_NONE } }
         for _, key in ipairs(SOUND_KEYS) do
-            if SOUNDS[key] then choices[#choices + 1] = { key, PrettyKey(key) } end
+            choices[#choices + 1] = { key, PrettyKey(key) }
         end
         ChoiceRow(f.label, choices, U.GetPath(aura, path) or false, function(value)
             Commit(aura, path, value or nil, false)
@@ -1070,7 +1070,7 @@ local function Build()
     help:SetHandler("OnMouseExit", function() ClearTooltip(InformationTooltip) end)
 
     -- Enlace para donar (solo en el megaservidor del autor).
-    if OA.Settings and OA.Settings.CanDonate() then
+    if OA.Settings.CanDonate() then
         local donate = WM:CreateControl("OmniAuraEditorDonate", win, CT_BUTTON)
         donate:SetDimensions(130, 24)
         donate:SetFont("ZoFontGameSmall")
@@ -1139,9 +1139,7 @@ local function Build()
     -- Escena propia: muestra el cursor, se cierra con Esc y mantiene visibles las auras.
     local scene = ZO_Scene:New(SCENE_NAME, SCENE_MANAGER)
     scene:AddFragment(ZO_SimpleSceneFragment:New(win))
-    if FRAGMENT_GROUP and FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW then
-        scene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-    end
+    scene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
     scene:AddFragment(OA.Display.fragment)
     scene:RegisterCallback("StateChange", function(_, newState)
         if newState == SCENE_SHOWING then
@@ -1342,6 +1340,6 @@ function Ed.Init()
 end
 
 -- Usado por Bindings.xml
-function OmniAura_ToggleEditor()
+function OA.ToggleEditor()
     Ed.Toggle()
 end

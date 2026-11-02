@@ -2,6 +2,8 @@
 
 *[English](README.md) · Español*
 
+> **Aviso sobre IA:** el código de OmniAura se ha escrito con la ayuda de un asistente de programación con IA (Claude, de Anthropic). El autor lo ha revisado y probado en el juego.
+
 ![OmniAura](screenshots/01-help.png)
 
 **Tus propios avisos en pantalla para The Elder Scrolls Online.** Vigila buffs, debuffs, recursos, procs de sets y el estado de combate, y muéstralos como iconos, barras o textos justo donde quieras, todo desde un editor visual dentro del juego y sin escribir ni un solo ID.
@@ -52,6 +54,11 @@ Versión actual: **1.1.0** (ver [CHANGELOG.md](CHANGELOG.md)).
 /omni reset confirm      borra todas las auras
 ```
 
+## Créditos
+
+- [LibAddonMenu-2.0](https://www.esoui.com/downloads/info7-LibAddonMenu.html) de sirinsidiator y Seerah (opcional): el panel de *Ajustes → Add-Ons*.
+- Los iconos, los sonidos y los nombres de recursos, clases, armas y líneas de habilidad son los del propio juego.
+
 ## Desarrollo
 
 Enlaza la carpeta del proyecto en la de AddOns del juego (PowerShell):
@@ -88,6 +95,14 @@ Bindings.xml            tecla para abrir el editor
 - **Trigger nuevo:** `OA.Triggers.types.<nombre> = { Prepare, Register, Unregister, Check }` y sus campos en `TRIGGER_FIELDS` del editor.
 - **Display nuevo:** `NewType("<nombre>")` con `Build`, `Configure`, `Update` y `SetBoxSize`, y sus campos en `DISPLAY_FIELDS`.
 - **Opción del formulario:** una línea en el esquema; `show = function(ctx)` la oculta cuando no aplica.
+
+### Normas de ESOUI
+
+- Nada global salvo la tabla `OmniAura` (más `OmniAura_SV` y el `SI_BINDING_NAME_...` de la tecla): las funciones van en ella, p. ej. `OmniAura.ToggleEditor()` en `Bindings.xml`.
+- No comprobar si existen funciones u objetos del juego (`if CHAT_ROUTER then`, `GetClassName and ...`, `pcall` para "por si acaso"): se verifican antes en `ESOUIDocumentation.txt` de la versión de API o en el [código de la interfaz](https://github.com/esoui/esoui), o en el juego con `/script d(NOMBRE)`.
+- Si un evento tiene filtro (`REGISTER_FILTER_IS_ERROR`, `REGISTER_FILTER_SOURCE_COMBAT_UNIT_TYPE`...), se usa el filtro en vez de comprobarlo en Lua.
+- Los textos que ya existen en el juego se toman con `GetString(SI_...)` en `lang/en.lua` y no se repiten en los demás idiomas.
+- Evitar los alias de `addoncompatibilityaliases` (p. ej. `POWERTYPE_*`).
 
 ### Publicar una versión
 
